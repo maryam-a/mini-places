@@ -3,6 +3,11 @@ import numpy as np
 import h5py
 import scipy.misc
 
+# File Paths
+## Maryam
+data_root = '../data/images/'
+data_list_prefix = 'data/'
+
 def createH5(params):
 
 	# create output h5 file
@@ -47,16 +52,16 @@ if __name__=='__main__':
 		'name': 'miniplaces',
 		'split': 'train',
 		'img_resize': 256,
-		'data_root': '../../data/images/',	# MODIFY PATH ACCORDINGLY
-    		'data_list': '../../data/train.txt'
+		'data_root': data_root,   # MODIFY PATH ACCORDINGLY
+    	'data_list': data_list_prefix + 'train.txt' # MODIFY PATH ACCORDINGLY
 	}
 
 	params_val = {
 		'name': 'miniplaces',
 		'split': 'val',
 		'img_resize': 256,
-		'data_root': '../../data/images/',	# MODIFY PATH ACCORDINGLY
-    		'data_list': '../../data/val.txt'
+		'data_root': data_root,   # MODIFY PATH ACCORDINGLY
+    	'data_list': data_list_prefix + 'val.txt',   # MODIFY PATH ACCORDINGLY
 	}
 
 	createH5(params_train)
