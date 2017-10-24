@@ -19,6 +19,9 @@ step_save = 10000
 path_save = 'alexnet'
 start_from = ''
 
+data_root = '../data/images/'
+data_list_prefix = 'data/'
+
 def alexnet(x, keep_dropout):
     weights = {
         'wc1': tf.Variable(tf.random_normal([11, 11, 3, 96], stddev=np.sqrt(2./(11*11*3)))),
@@ -88,8 +91,8 @@ def alexnet(x, keep_dropout):
 # Construct dataloader
 opt_data_train = {
     #'data_h5': 'miniplaces_256_train.h5',
-    'data_root': 'C:/Users/marya/Dropbox (MIT)/6.819/mini-places/images/',   # MODIFY PATH ACCORDINGLY
-    'data_list': 'C:/Users/marya/Dropbox (MIT)/6.819/mini-places/staff-code/data/train.txt', # MODIFY PATH ACCORDINGLY
+    'data_root': data_root,   # MODIFY PATH ACCORDINGLY
+    'data_list': data_list_prefix + 'train.txt', # MODIFY PATH ACCORDINGLY
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
@@ -97,8 +100,8 @@ opt_data_train = {
     }
 opt_data_val = {
     #'data_h5': 'miniplaces_256_val.h5',
-    'data_root': 'C:/Users/marya/Dropbox (MIT)/6.819/mini-places/images/',   # MODIFY PATH ACCORDINGLY
-    'data_list': 'C:/Users/marya/Dropbox (MIT)/6.819/mini-places/staff-code/data/val.txt',   # MODIFY PATH ACCORDINGLY
+    'data_root': data_root,   # MODIFY PATH ACCORDINGLY
+    'data_list': data_list_prefix + 'val.txt', # MODIFY PATH ACCORDINGLY
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
