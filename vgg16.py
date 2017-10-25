@@ -4,7 +4,7 @@ import tensorflow as tf
 from DataLoader import *
 
 # Dataset Parameters
-batch_size = 200 #256
+batch_size = 20 #256
 load_size = 256
 fine_size = 224
 c = 3
@@ -38,7 +38,7 @@ def vgg16(x, keep_dropout):
                                             
         'wc5': tf.Variable(tf.random_normal([3, 3, 128, 256], stddev=np.sqrt(2./(3*3*128)))),
         'wc6': tf.Variable(tf.random_normal([3, 3, 256, 256], stddev=np.sqrt(2./(3*3*256)))),
-        'wc7': tf.Variable(tf.random_normal([3, 3, 256, 256], stddev=np.sqrt(2./(3*3*256)))), 
+        'wc7': tf.Variable(tf.random_normal([3, 3, 256, 256], stddev=np.sqrt(2./(3*3*256)))),
                                             
         'wc8': tf.Variable(tf.random_normal([3, 3, 256, 512], stddev=np.sqrt(2./(3*3*256)))),  
         'wc9': tf.Variable(tf.random_normal([3, 3, 512, 512], stddev=np.sqrt(2./(3*3*512)))), 
