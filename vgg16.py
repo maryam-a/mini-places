@@ -1,4 +1,5 @@
 import os, datetime
+from pathlib import Path
 import numpy as np
 import tensorflow as tf
 from DataLoader import *
@@ -194,6 +195,10 @@ init = tf.global_variables_initializer()
 
 # define saver
 saver = tf.train.Saver()
+
+# ensure save location is present
+if not Path(path_save).is_dir():
+    Path(path_save).mkdir()
 
 # define summary writer
 #writer = tf.train.SummaryWriter('.', graph=tf.get_default_graph())
