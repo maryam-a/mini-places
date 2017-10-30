@@ -24,10 +24,11 @@ MAX_POOL_STRIDE = [1,2,2,1]
 MAX_POOL_WINDOW = [1,2,2,1]
 categories = 100
 
-# File Paths
+# File Paths - MODIFY PATHS ACCORDINGLY
 ## Maryam
 data_root = '../data/images/'
 data_list_prefix = 'data/'
+kerberos = "marchie"
 
 def vgg16(x, keep_dropout):
     weights = {
@@ -152,8 +153,8 @@ def vgg16(x, keep_dropout):
 # Construct dataloader
 opt_data_train = {
     #'data_h5': 'miniplaces_256_train.h5',
-    'data_root': data_root,   # MODIFY PATH ACCORDINGLY
-    'data_list': data_list_prefix + 'train.txt', # MODIFY PATH ACCORDINGLY
+    'data_root': data_root,   
+    'data_list': data_list_prefix + 'train.txt', 
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
@@ -161,8 +162,17 @@ opt_data_train = {
     }
 opt_data_val = {
     #'data_h5': 'miniplaces_256_val.h5',
-    'data_root': data_root,   # MODIFY PATH ACCORDINGLY
-    'data_list': data_list_prefix + 'val.txt',   # MODIFY PATH ACCORDINGLY
+    'data_root': data_root,   
+    'data_list': data_list_prefix + 'val.txt',   
+    'load_size': load_size,
+    'fine_size': fine_size,
+    'data_mean': data_mean,
+    'randomize': False
+    }
+opt_data_test = {
+    #'data_h5': 'miniplaces_256_test.h5',
+    'data_root': data_root,   
+    'data_list': data_list_prefix + 'test.txt',   
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
@@ -171,6 +181,7 @@ opt_data_val = {
 
 loader_train = DataLoaderDisk(**opt_data_train)
 loader_val = DataLoaderDisk(**opt_data_val)
+loader_test = DataLoaderDisk(**opt_data_test)
 #loader_train = DataLoaderH5(**opt_data_train)
 #loader_val = DataLoaderH5(**opt_data_val)
 
@@ -266,3 +277,16 @@ with tf.Session() as sess:
     acc1_total /= num_batch
     acc5_total /= num_batch
     print('Evaluation Finished! Accuracy Top1 = ' + "{:.4f}".format(acc1_total) + ", Top5 = " + "{:.4f}".format(acc5_total))
+
+    print('Evaluation on the whole test set...')
+    result = open(kerberos +'.test.pred.' + datetime.datetime.now().strftime("%Y-%m-%d") + '.txt', 'w')
+    test_acc1_total = 0.
+    test_acc5_total = 0.
+    loader_test.reset()
+    for j in range(loader_test.size()):
+        image, labels = loader_test.next_batch(1)
+        test_image_labels = "val/" + "%08d" % (j,) + ".jpg"
+        for l in labels:
+            test_image_labels = test_image_labels + " " + l
+        result.write(test_image_labels + "/n")
+    result.close()
