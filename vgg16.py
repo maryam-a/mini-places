@@ -286,6 +286,7 @@ with tf.Session() as sess:
     for j in range(loader_test.size()):
         image, labels = loader_test.next_batch(1)
         test_image_labels = "val/" + "%08d" % (j,) + ".jpg"
+        # TODO: Sort labels based on confidence
         for l in labels:
             test_image_labels = test_image_labels + " " + l
         result.write(test_image_labels + "/n")
