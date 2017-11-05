@@ -291,7 +291,7 @@ with tf.Session() as sess:
         test_images_batch = loader_test.next_batch(1)
         test_image_labels = "val/" + "%08d" % (j,) + ".jpg"
         result = sess.run([top5_pred], feed_dict = {x: images_batch, keep_dropout: 1.})[0][1][0]
-        # TODO: Sort labels based on confidence
+        print(result)
         for l in result:
             test_image_labels = test_image_labels + " " + str(l)
         output.write(test_image_labels + "/n")
