@@ -291,8 +291,8 @@ with tf.Session() as sess:
         test_images_batch = loader_test.next_batch(1)
         test_image_labels = "val/" + "%08d" % (j+1,) + ".jpg"
         result = sess.run([top5_pred], feed_dict = {x: images_batch, keep_dropout: 1.})[0][1][0]
-        print(result)
         for l in result:
             test_image_labels = test_image_labels + " " + str(l)
+        print (test_image_labels)
         output.write(test_image_labels + "\n")
     output.close()
