@@ -203,6 +203,7 @@ train_optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(l
 # Evaluate model
 accuracy1 = tf.reduce_mean(tf.cast(tf.nn.in_top_k(logits, y, 1), tf.float32))
 accuracy5 = tf.reduce_mean(tf.cast(tf.nn.in_top_k(logits, y, 5), tf.float32))
+top5_pred = tf.nn.top_k(logits, 5)
 
 # define initialization
 init = tf.global_variables_initializer()
