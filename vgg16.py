@@ -17,7 +17,7 @@ dropout = 0.5 # Dropout, probability to keep units
 training_iters = 1 #370000
 step_display = 50 
 step_save = 10000
-path_save = 'vgg16'
+path_save = 'vgg16results'
 start_from = ''
 CONV_STRIDE = [1,1,1,1]
 MAX_POOL_STRIDE = [1,2,2,1]
@@ -158,7 +158,8 @@ opt_data_train = {
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
-    'randomize': True
+    'randomize': True,
+    'test_data': False
     }
 opt_data_val = {
     #'data_h5': 'miniplaces_256_val.h5',
@@ -167,7 +168,8 @@ opt_data_val = {
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
-    'randomize': False
+    'randomize': False,
+    'test_data': False
     }
 opt_data_test = {
     #'data_h5': 'miniplaces_256_test.h5',
@@ -176,7 +178,8 @@ opt_data_test = {
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
-    'randomize': False
+    'randomize': False,
+    'test_data': True
     }
 
 loader_train = DataLoaderDisk(**opt_data_train)
@@ -279,15 +282,16 @@ with tf.Session() as sess:
     print('Evaluation Finished! Accuracy Top1 = ' + "{:.4f}".format(acc1_total) + ", Top5 = " + "{:.4f}".format(acc5_total))
 
     print('Evaluation on the whole test set...')
-    result = open(kerberos +'.test.pred.' + datetime.datetime.now().strftime("%Y-%m-%d") + '.txt', 'w')
-    test_acc1_total = 0.
-    test_acc5_total = 0.
+    output = open(kerberos +'.test.pred.' + datetime.datetime.now().strftime("%Y-%m-%d") + '.txt', 'w')
+    test_num_batch = loader_test.size()
     loader_test.reset()
-    for j in range(loader_test.size()):
-        image, labels = loader_test.next_batch(1)
+
+    for j in range(test_num_batch):
+        test_images_batch = loader_test.next_batch(1)
         test_image_labels = "val/" + "%08d" % (j,) + ".jpg"
+        result = sess.run([top5_pred], feed_dict = {x: images_batch, keep_dropout: 1.})[0][1][0]
         # TODO: Sort labels based on confidence
-        for l in labels:
+        for l in result:
             test_image_labels = test_image_labels + " " + l
-        result.write(test_image_labels + "/n")
-    result.close()
+        output.write(test_image_labels + "/n")
+    output.close()

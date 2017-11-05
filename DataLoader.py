@@ -74,30 +74,36 @@ class DataLoaderDisk(object):
         self.data_mean = np.array(kwargs['data_mean'])
         self.randomize = kwargs['randomize']
         self.data_root = os.path.join(kwargs['data_root'])
+        self.test_data = kwargs['test_data']
 
         # read data info from lists
         self.list_im = []
-        self.list_lab = []
+        if not self.test_data:
+            self.list_lab = []
         with open(kwargs['data_list'], 'r') as f:
             for line in f:
                 path, lab =line.rstrip().split(' ')
                 self.list_im.append(os.path.join(self.data_root, path))
-                self.list_lab.append(int(lab))
+                if not self.test_data:
+                    self.list_lab.append(int(lab))
         self.list_im = np.array(self.list_im, np.object)
-        self.list_lab = np.array(self.list_lab, np.int64)
+        if not self.test_data:
+            self.list_lab = np.array(self.list_lab, np.int64)
         self.num = self.list_im.shape[0]
         print('# Images found:', self.num)
 
         # permutation
         perm = np.random.permutation(self.num) 
         self.list_im[:, ...] = self.list_im[perm, ...]
-        self.list_lab[:] = self.list_lab[perm, ...]
+        if not self.test_data:
+            self.list_lab[:] = self.list_lab[perm, ...]
 
         self._idx = 0
         
     def next_batch(self, batch_size):
         images_batch = np.zeros((batch_size, self.fine_size, self.fine_size, 3)) 
-        labels_batch = np.zeros(batch_size)
+        if not self.test_data:
+            labels_batch = np.zeros(batch_size)
         for i in range(batch_size):
             image = scipy.misc.imread(self.list_im[self._idx])
             image = scipy.misc.imresize(image, (self.load_size, self.load_size))
@@ -114,13 +120,16 @@ class DataLoaderDisk(object):
                 offset_w = (self.load_size-self.fine_size)//2
 
             images_batch[i, ...] =  image[offset_h:offset_h+self.fine_size, offset_w:offset_w+self.fine_size, :]
-            labels_batch[i, ...] = self.list_lab[self._idx]
+            if not self.test_data:
+                labels_batch[i, ...] = self.list_lab[self._idx]
             
             self._idx += 1
             if self._idx == self.num:
                 self._idx = 0
-        
-        return images_batch, labels_batch
+        if not self.test_data:
+            return images_batch, labels_batch
+        else:
+            return images_batch
     
     def size(self):
         return self.num
