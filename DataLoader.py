@@ -82,7 +82,8 @@ class DataLoaderDisk(object):
             self.list_lab = []
         with open(kwargs['data_list'], 'r') as f:
             for line in f:
-                path, lab =line.rstrip().split(' ')
+                if not self.test_data:
+                    path =line.rstrip()
                 self.list_im.append(os.path.join(self.data_root, path))
                 if not self.test_data:
                     self.list_lab.append(int(lab))
