@@ -137,7 +137,7 @@ def vgg16(x, keep_dropout):
     # WL14: FC + eLU + Dropout
     fc14 = tf.reshape(pool5, [-1, weights['wc14'].get_shape().as_list()[0]])
     fc14 = tf.add(tf.matmul(fc14, weights['wc14']), biases['bc14'])
-    fc14 = tf.nn.elu(fc14)
+    fc14 = tf.nn.relu(fc14)
     fc14 = tf.nn.dropout(fc14, keep_dropout)
     
     # WL15: FC + eLU + Dropout
