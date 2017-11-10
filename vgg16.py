@@ -13,7 +13,7 @@ data_mean = np.asarray([0.45834960097,0.44674252445,0.41352266842])
 
 # Training Parameters
 learning_rate = 0.00001
-dropout = 0.5 # Dropout, probability to keep units
+dropout = 0.6 # Dropout, probability to keep units
 training_iters = 50000 #370000
 step_display = 50 
 step_save = 10000
@@ -142,7 +142,7 @@ def vgg16(x, keep_dropout):
     
     # WL15: FC + eLU + Dropout
     fc15 = tf.add(tf.matmul(fc14, weights['wc15']), biases['bc15'])
-    fc15 = tf.nn.relu(fc15)
+    fc15 = tf.nn.elu(fc15)
     fc15 = tf.nn.dropout(fc15, keep_dropout)
 
     # WL16: Output FC
