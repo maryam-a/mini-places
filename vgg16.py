@@ -77,61 +77,61 @@ def vgg16(x, keep_dropout):
     # Convolutional Layer: 3 x 3 window; stride = 1; padding = 1
     # Max Pool: 2 x 2 window; stride = 2
     
-    # WL1: Conv (conv3-64) + eLU
+    # WL1: Conv (conv3-64) + ReLU
     conv1 = tf.nn.conv2d(x, weights['wc1'], strides=CONV_STRIDE, padding='SAME')
-    conv1 = tf.nn.elu(tf.nn.bias_add(conv1, biases['bc1']))
+    conv1 = tf.nn.relu(tf.nn.bias_add(conv1, biases['bc1']))
 
-    # WL2: Conv (conv3-64) + eLU + Max Pool
+    # WL2: Conv (conv3-64) + ReLU + Max Pool
     conv2 = tf.nn.conv2d(conv1, weights['wc2'], strides=CONV_STRIDE, padding='SAME')
-    conv2 = tf.nn.elu(tf.nn.bias_add(conv2, biases['bc2']))
+    conv2 = tf.nn.relu(tf.nn.bias_add(conv2, biases['bc2']))
     pool1 = tf.nn.max_pool(conv2, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
 
-    # WL3: Conv (conv3-128) + eLU
+    # WL3: Conv (conv3-128) + ReLU
     conv3 = tf.nn.conv2d(pool1, weights['wc3'], strides=CONV_STRIDE, padding='SAME')
-    conv3 = tf.nn.elu(tf.nn.bias_add(conv3, biases['bc3']))
+    conv3 = tf.nn.relu(tf.nn.bias_add(conv3, biases['bc3']))
 
-    # WL4: Conv (conv3-128) + eLU + Max Pool
+    # WL4: Conv (conv3-128) + ReLU + Max Pool
     conv4 = tf.nn.conv2d(conv3, weights['wc4'], strides=CONV_STRIDE, padding='SAME')
-    conv4 = tf.nn.elu(tf.nn.bias_add(conv4, biases['bc4']))
+    conv4 = tf.nn.relu(tf.nn.bias_add(conv4, biases['bc4']))
     pool2 = tf.nn.max_pool(conv4, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
 
-    # WL5: Conv (conv3-256) + eLU
+    # WL5: Conv (conv3-256) + ReLU
     conv5 = tf.nn.conv2d(pool2, weights['wc5'], strides=CONV_STRIDE, padding='SAME')
-    conv5 = tf.nn.elu(tf.nn.bias_add(conv5, biases['bc5']))
+    conv5 = tf.nn.relu(tf.nn.bias_add(conv5, biases['bc5']))
     
-    # WL6: Conv (conv3-256) + eLU
+    # WL6: Conv (conv3-256) + ReLU
     conv6 = tf.nn.conv2d(conv5, weights['wc6'], strides=CONV_STRIDE, padding='SAME')
-    conv6 = tf.nn.elu(tf.nn.bias_add(conv6, biases['bc6']))
+    conv6 = tf.nn.relu(tf.nn.bias_add(conv6, biases['bc6']))
     
-    # WL7: Conv (conv3-256) + eLU + Max Pool
+    # WL7: Conv (conv3-256) + ReLU + Max Pool
     conv7 = tf.nn.conv2d(conv6, weights['wc7'], strides=CONV_STRIDE, padding='SAME')
-    conv7 = tf.nn.elu(tf.nn.bias_add(conv7, biases['bc7']))
+    conv7 = tf.nn.relu(tf.nn.bias_add(conv7, biases['bc7']))
     pool3 = tf.nn.max_pool(conv7, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
-    # WL8: Conv (conv3-512) + eLU
+    # WL8: Conv (conv3-512) + ReLU
     conv8 = tf.nn.conv2d(pool3, weights['wc8'], strides=CONV_STRIDE, padding='SAME')
-    conv8 = tf.nn.elu(tf.nn.bias_add(conv8, biases['bc8']))
+    conv8 = tf.nn.relu(tf.nn.bias_add(conv8, biases['bc8']))
     
-    # WL9: Conv (conv3-512) + eLU
+    # WL9: Conv (conv3-512) + ReLU
     conv9 = tf.nn.conv2d(conv8, weights['wc9'], strides=CONV_STRIDE, padding='SAME')
-    conv9 = tf.nn.elu(tf.nn.bias_add(conv9, biases['bc9']))
+    conv9 = tf.nn.relu(tf.nn.bias_add(conv9, biases['bc9']))
     
-    # WL10: Conv (conv3-512) + eLU + Max Pool
+    # WL10: Conv (conv3-512) + ReLU + Max Pool
     conv10 = tf.nn.conv2d(conv9, weights['wc10'], strides=CONV_STRIDE, padding='SAME')
-    conv10 = tf.nn.elu(tf.nn.bias_add(conv10, biases['bc10']))
+    conv10 = tf.nn.relu(tf.nn.bias_add(conv10, biases['bc10']))
     pool4 = tf.nn.max_pool(conv10, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
-    # WL11: Conv (conv3-512) + eLU
+    # WL11: Conv (conv3-512) + ReLU
     conv11 = tf.nn.conv2d(pool4, weights['wc11'], strides=CONV_STRIDE, padding='SAME')
-    conv11 = tf.nn.elu(tf.nn.bias_add(conv11, biases['bc11']))
+    conv11 = tf.nn.relu(tf.nn.bias_add(conv11, biases['bc11']))
     
-    # WL12: Conv (conv3-512) + eLU
+    # WL12: Conv (conv3-512) + ReLU
     conv12 = tf.nn.conv2d(conv11, weights['wc12'], strides=CONV_STRIDE, padding='SAME')
-    conv12 = tf.nn.elu(tf.nn.bias_add(conv12, biases['bc12']))
+    conv12 = tf.nn.relu(tf.nn.bias_add(conv12, biases['bc12']))
     
-    # WL13: Conv (conv3-512) + eLU + Max Pool
+    # WL13: Conv (conv3-512) + ReLU + Max Pool
     conv13 = tf.nn.conv2d(conv12, weights['wc13'], strides=CONV_STRIDE, padding='SAME')
-    conv13 = tf.nn.elu(tf.nn.bias_add(conv13, biases['bc13']))
+    conv13 = tf.nn.relu(tf.nn.bias_add(conv13, biases['bc13']))
     pool5 = tf.nn.max_pool(conv13, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
     # WL14: FC + eLU + Dropout
