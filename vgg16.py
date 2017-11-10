@@ -142,7 +142,7 @@ def vgg16(x, keep_dropout):
     
     # WL15: FC + eLU + Dropout
     fc15 = tf.add(tf.matmul(fc14, weights['wc15']), biases['bc15'])
-    fc15 = tf.nn.elu(fc15)
+    fc15 = tf.nn.relu(fc15)
     fc15 = tf.nn.dropout(fc15, keep_dropout)
 
     # WL16: Output FC
