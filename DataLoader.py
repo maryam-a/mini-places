@@ -99,6 +99,7 @@ class DataLoaderDisk(object):
         if not self.test_data:
             perm = np.random.permutation(self.num) 
             self.list_im[:, ...] = self.list_im[perm, ...]
+            self.list_lab[:] = self.list_lab[perm, ...]
 
         self._idx = 0
         
