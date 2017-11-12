@@ -166,7 +166,7 @@ def vgg19(x, keep_dropout):
     # WL19: Output FC
     fc19 = tf.add(tf.matmul(fc18, weights['wc19']), biases['bc19'])
     
-    return fc16
+    return fc19
 
 # Construct dataloader
 opt_data_train = {
