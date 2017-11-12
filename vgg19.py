@@ -159,7 +159,7 @@ def vgg19(x, keep_dropout):
     fc17 = tf.nn.dropout(fc17, keep_dropout)
     
     # WL18: FC + ReLU + Dropout
-    fc18 = tf.add(tf.matmul(fc14, weights['wc18']), biases['bc18'])
+    fc18 = tf.add(tf.matmul(fc17, weights['wc18']), biases['bc18'])
     fc18 = tf.nn.relu(fc18)
     fc18 = tf.nn.dropout(fc18, keep_dropout)
 
