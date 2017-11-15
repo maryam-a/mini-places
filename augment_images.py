@@ -4,7 +4,7 @@ from scipy import misc, ndimage
 
 data_root = '../data/images/train/'
 label_root = 'data/'
-label_file = open(label_root + 'new_train.txt', 'w')
+label_file = open(label_root + 'train.txt', 'a')
 ROTATE = 2000
 CROP = 3000
 BLUR = 4000
