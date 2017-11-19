@@ -73,85 +73,85 @@ def vgg16(x, keep_dropout, train_phase):
     
     # WL1: Conv (conv3-64) + ReLU
     conv1 = tf.nn.conv2d(x, weights['wc1'], strides=CONV_STRIDE, padding='SAME')
-    conv1 = batch_norm_layer(conv1, train_phase, 'bn1')
     conv1 = tf.nn.relu(conv1)
-
+    conv1 = batch_norm_layer(conv1, train_phase, 'bn1')
+    
     # WL2: Conv (conv3-64) + ReLU + Max Pool
     conv2 = tf.nn.conv2d(conv1, weights['wc2'], strides=CONV_STRIDE, padding='SAME')
-    conv2 = batch_norm_layer(conv2, train_phase, 'bn2')
     conv2 = tf.nn.relu(conv2)
+    conv2 = batch_norm_layer(conv2, train_phase, 'bn2')
     pool1 = tf.nn.max_pool(conv2, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
 
     # WL3: Conv (conv3-128) + ReLU
     conv3 = tf.nn.conv2d(pool1, weights['wc3'], strides=CONV_STRIDE, padding='SAME')
-    conv3 = batch_norm_layer(conv3, train_phase, 'bn3')
     conv3 = tf.nn.relu(conv3)
+    conv3 = batch_norm_layer(conv3, train_phase, 'bn3')
 
     # WL4: Conv (conv3-128) + ReLU + Max Pool
     conv4 = tf.nn.conv2d(conv3, weights['wc4'], strides=CONV_STRIDE, padding='SAME')
-    conv4 = batch_norm_layer(conv4, train_phase, 'bn4')
     conv4 = tf.nn.relu(conv4)
+    conv4 = batch_norm_layer(conv4, train_phase, 'bn4')
     pool2 = tf.nn.max_pool(conv4, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
 
     # WL5: Conv (conv3-256) + ReLU
     conv5 = tf.nn.conv2d(pool2, weights['wc5'], strides=CONV_STRIDE, padding='SAME')
-    conv5 = batch_norm_layer(conv5, train_phase, 'bn5')
     conv5 = tf.nn.relu(conv5)
+    conv5 = batch_norm_layer(conv5, train_phase, 'bn5')
     
     # WL6: Conv (conv3-256) + ReLU
     conv6 = tf.nn.conv2d(conv5, weights['wc6'], strides=CONV_STRIDE, padding='SAME')
-    conv6 = batch_norm_layer(conv6, train_phase, 'bn6')
     conv6 = tf.nn.relu(conv6)
+    conv6 = batch_norm_layer(conv6, train_phase, 'bn6')
     
     # WL7: Conv (conv3-256) + ReLU + Max Pool
     conv7 = tf.nn.conv2d(conv6, weights['wc7'], strides=CONV_STRIDE, padding='SAME')
-    conv7 = batch_norm_layer(conv7, train_phase, 'bn7')
     conv7 = tf.nn.relu(conv7)
+    conv7 = batch_norm_layer(conv7, train_phase, 'bn7')
     pool3 = tf.nn.max_pool(conv7, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
     # WL8: Conv (conv3-512) + ReLU
     conv8 = tf.nn.conv2d(pool3, weights['wc8'], strides=CONV_STRIDE, padding='SAME')
-    conv8 = batch_norm_layer(conv8, train_phase, 'bn8')
     conv8 = tf.nn.relu(conv8)
+    conv8 = batch_norm_layer(conv8, train_phase, 'bn8')
     
     # WL9: Conv (conv3-512) + ReLU
     conv9 = tf.nn.conv2d(conv8, weights['wc9'], strides=CONV_STRIDE, padding='SAME')
-    conv9 = batch_norm_layer(conv9, train_phase, 'bn9')
     conv9 = tf.nn.relu(conv9)
+    conv9 = batch_norm_layer(conv9, train_phase, 'bn9')
     
     # WL10: Conv (conv3-512) + ReLU + Max Pool
     conv10 = tf.nn.conv2d(conv9, weights['wc10'], strides=CONV_STRIDE, padding='SAME')
-    conv10 = batch_norm_layer(conv10, train_phase, 'bn10')
     conv10 = tf.nn.relu(conv10)
+    conv10 = batch_norm_layer(conv10, train_phase, 'bn10')
     pool4 = tf.nn.max_pool(conv10, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
     # WL11: Conv (conv3-512) + ReLU
     conv11 = tf.nn.conv2d(pool4, weights['wc11'], strides=CONV_STRIDE, padding='SAME')
-    conv11 = batch_norm_layer(conv11, train_phase, 'bn11')
     conv11 = tf.nn.relu(conv11)
+    conv11 = batch_norm_layer(conv11, train_phase, 'bn11')
     
     # WL12: Conv (conv3-512) + ReLU
     conv12 = tf.nn.conv2d(conv11, weights['wc12'], strides=CONV_STRIDE, padding='SAME')
-    conv12 = batch_norm_layer(conv12, train_phase, 'bn12')
     conv12 = tf.nn.relu(conv12)
+    conv12 = batch_norm_layer(conv12, train_phase, 'bn12')
     
     # WL13: Conv (conv3-512) + ReLU + Max Pool
     conv13 = tf.nn.conv2d(conv12, weights['wc13'], strides=CONV_STRIDE, padding='SAME')
-    conv13 = batch_norm_layer(conv13, train_phase, 'bn13')
     conv13 = tf.nn.relu(conv13)
+    conv13 = batch_norm_layer(conv13, train_phase, 'bn13')
     pool5 = tf.nn.max_pool(conv13, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
     # WL14: FC + ReLU + Dropout
     fc14 = tf.reshape(pool5, [-1, weights['wc14'].get_shape().as_list()[0]])
     fc14 = tf.matmul(fc14, weights['wc14'])
-    fc14 = batch_norm_layer(fc14, train_phase, 'bn14')
     fc14 = tf.nn.relu(fc14)
+    fc14 = batch_norm_layer(fc14, train_phase, 'bn14')
     fc14 = tf.nn.dropout(fc14, keep_dropout)
     
     # WL15: FC + ReLU + Dropout
     fc15 = tf.matmul(fc14, weights['wc15'])
-    fc15 = batch_norm_layer(fc15, train_phase, 'bn15')
     fc15 = tf.nn.relu(fc15)
+    fc15 = batch_norm_layer(fc15, train_phase, 'bn15')
     fc15 = tf.nn.dropout(fc15, keep_dropout)
 
     # WL16: Output FC
