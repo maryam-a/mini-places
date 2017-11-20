@@ -9,14 +9,14 @@ batch_size = 25
 load_size = 256
 fine_size = 224
 c = 3
-data_mean = np.asarray([0.45834960097,0.44674252445,0.41352266842])
+data_mean = np.asarray([0.44947848234408205,0.43278461113723926,0.40700250452738196])
 
 # Training Parameters
-learning_rate = 0.00001
+learning_rate = 0.0001
 dropout = 0.6 # Dropout, probability to keep units
 training_iters = 25000 #370000
 step_display = 50 
-step_save = 10000
+step_save = 30000
 path_save = 'vgg16results'
 start_from = ''
 CONV_STRIDE = [1,1,1,1]
@@ -198,7 +198,9 @@ logits = vgg16(x, keep_dropout)
 
 # Define loss and optimizer
 loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y, logits=logits))
-train_optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
+train_optimizer1 = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
+train_optimizer2 = tf.train.AdamOptimizer(learning_rate=(learning_rate/10.)).minimize(loss)
+train_optimizer3 = tf.train.AdamOptimizer(learning_rate=(learning_rate/100.)).minimize(loss)
 
 # Evaluate model
 accuracy1 = tf.reduce_mean(tf.cast(tf.nn.in_top_k(logits, y, 1), tf.float32))
@@ -251,8 +253,13 @@ with tf.Session() as sess:
                   "{:.2f}".format(acc5))
         
         # Run optimization op (backprop)
-        sess.run(train_optimizer, feed_dict={x: images_batch, y: labels_batch, keep_dropout: dropout})
-        
+        if step <= 10000:
+            sess.run(train_optimizer1, feed_dict={x: images_batch, y: labels_batch, keep_dropout: dropout})
+        elif 10000 < step < 20000:          
+            sess.run(train_optimizer2, feed_dict={x: images_batch, y: labels_batch, keep_dropout: dropout})
+        else:
+            sess.run(train_optimizer3, feed_dict={x: images_batch, y: labels_batch, keep_dropout: dropout})
+
         step += 1
         
         # Save model
