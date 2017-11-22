@@ -134,15 +134,15 @@ def vgg16(x, keep_dropout):
     conv13 = tf.nn.relu(tf.nn.bias_add(conv13, biases['bc13']))
     pool5 = tf.nn.max_pool(conv13, ksize=MAX_POOL_WINDOW, strides=MAX_POOL_STRIDE, padding='SAME')
     
-    # WL14: FC + eLU + Dropout
+    # WL14: FC + ReLU + Dropout
     fc14 = tf.reshape(pool5, [-1, weights['wc14'].get_shape().as_list()[0]])
     fc14 = tf.add(tf.matmul(fc14, weights['wc14']), biases['bc14'])
     fc14 = tf.nn.relu(fc14)
     fc14 = tf.nn.dropout(fc14, keep_dropout)
     
-    # WL15: FC + eLU + Dropout
+    # WL15: FC + ReLU + Dropout
     fc15 = tf.add(tf.matmul(fc14, weights['wc15']), biases['bc15'])
-    fc15 = tf.nn.elu(fc15)
+    fc15 = tf.nn.relu(fc15)
     fc15 = tf.nn.dropout(fc15, keep_dropout)
 
     # WL16: Output FC
