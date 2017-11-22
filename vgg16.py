@@ -29,6 +29,8 @@ categories = 100
 # File Paths - MODIFY PATHS ACCORDINGLY
 data_root = '../data/images/'
 data_list_prefix = 'data/'
+training_file = 'train.txt' # 100,000 -> old_train.txt; 400,000 -> train.txt
+
 team_name = 'visionaries'
 
 def vgg16(x, keep_dropout):
@@ -154,7 +156,7 @@ def vgg16(x, keep_dropout):
 # Construct dataloader
 opt_data_train = {
     'data_root': data_root,   
-    'data_list': data_list_prefix + 'train.txt', 
+    'data_list': data_list_prefix + training_file, 
     'load_size': load_size,
     'fine_size': fine_size,
     'data_mean': data_mean,
