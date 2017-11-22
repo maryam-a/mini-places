@@ -1,19 +1,22 @@
 # Mini Places Challenge
-MIT 6.819 Mini Places Challenge by Maryam Archie and Sandeep Silwal.
+MIT 6.819 Mini Places Challenge by [Maryam Archie](https://github.com/maryam-a) and [Sandeep Silwal](https://github.com/ssilwa).
 
 ## Getting Started
 1. To run these scripts, you first need to download the [image data](https://github.com/maryam-a/mini-places-data). Be warned - it is going to take a long time to download.
 
-2. Edit the data paths and names.
+2. Edit the data paths in `augment_images.py` and `vgg16.py`.
 
 3. Download and Python 3 (if you don't already - preferably from Anaconda)
 
 4. Install the following dependencies:
 ```
 pip install tensorflow
+pip install tensorflow-gpu
 pip install scipy
 pip install pillow
 ```
+
+5. It is strongly recommended that you use a GPU when running `vgg16.py`.
 
 ## Augmenting the image data set
 With `augment_images.py`, you can:
