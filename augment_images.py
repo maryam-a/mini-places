@@ -68,7 +68,21 @@ def update_train_file():
 def get_new_data_mean():
     print ('Computing the new data mean')
 
-    print ('The new data mean is ')
+    rval = 0
+    gval = 0
+    bval = 0
+    total = 0
+    for subdir, dirs, files in os.walk(data_root):
+        for file in files:
+            filepath = subdir + os.sep + file
+            if filepath.endswith(".jpg"):
+                total += 1
+                currimg = misc.imread(filepath, mode = "RGB")
+                currimg = currimg/255.0
+                rval += np.average(currimg[:,:,0])
+                gval += np.average(currimg[:,:,1])
+                bval += np.average(currimg[:,:,2])
+    print ('The new data mean is '+ str(rval/total) + ", " + str(gval/total) + ", " + str(bval/total))
 
 # Augment the images and update the training file
 augment_images()
